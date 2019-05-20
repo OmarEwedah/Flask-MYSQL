@@ -1,7 +1,9 @@
-# 
+# Deploy Flask + MySQL with docker-compose
 
-Foobar is a Python library for dealing with word pluralization.
-
+## shopping Basket
+* use cases:
+   * "as a customer, i want to add an item into the basket"
+   * "as a customer, i want to view all my items in my basket"
 ## Prerequisites
 
 * [git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)  
