@@ -27,11 +27,12 @@ def shopping_basket():
 
         else:
             data = request.get_json()
+            request_helpers.add_shopping_basket(data['basket_id'], engine)
             request_helpers.update_cart_price_quantity(engine, data['item_id'], data['basket_id'], data['item_quantity'])
             request_helpers.add_item_to_basket(engine, data['item_id'], data['basket_id'])
             return jsonify(
                 status=202,
-                mimetype='application/json',
+                content_type='application/json',
                 message='item added to cart successfully')
 
 
@@ -52,7 +53,6 @@ def shopping_basket_total(shopping_cart_id):
 @app.route('/shoppingBasket/AddItem', methods=['POST'])
 def addItem():
     data = request.get_json()
-    print "jere"
     engine.execute("INSERT INTO shoppingBasket.Items (item_name, item_price, item_quantity) VALUES (%s, %s, %s)", data['item_name'], data['item_price'],data['item_quantity'])
     return jsonify(
         status=202,

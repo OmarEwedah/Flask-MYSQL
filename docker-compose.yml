@@ -10,6 +10,11 @@ services:
      - "5000:5000"
     links:
      - db
+    environment:
+     - DATABASE=shoppingBasket
+     - PASSWORD=p@ssw0rd123
+     - USER=root
+     - HOSTNAME=db 
   db:
     image: mysql
     ports:

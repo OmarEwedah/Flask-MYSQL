@@ -24,19 +24,6 @@ docker-compose up -d --build
 $ curl -X POST -H "Content-Type: application/json" -d '{"item_name": "Short","item_price": 200,"item_quantity": 10}' http://localhost:5000/shoppingBasket/AddItem
 ```
 
-## Add cart to database
-### From mysql command line
-
-```mysql
-# to connect to mysql
-
-mysql -u root -p
-
-# add example cart id
-
-INSERT INTO shoppingBasket.shoppingCart (shoppingCart_id,item_price_total, item_quantity_total) VALUES (0,0,0);
-```
-
 ## Add item to basket
 
 ```bash

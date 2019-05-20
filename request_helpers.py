@@ -116,3 +116,13 @@ def retrieve_all_items_from_basket(connection, basket_id):
         raise
     except Exception as e:
         logging.exception(e)
+
+
+def add_shopping_basket(basket_id, connection):
+    try:
+        connection.execute("INSERT IGNORE INTO shoppingBasket.shoppingCart (shoppingCart_id, item_price_total, item_quantity_total) VALUES (%s,0, 0)",basket_id)
+
+    except RuntimeError:
+        raise
+    except Exception as e:
+        logging.exception(e)

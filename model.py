@@ -3,15 +3,16 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from sqlalchemy import MetaData, create_engine, engine
+from os import environ as env
 
 metadata = MetaData()
 
 # Database Configurations
 app = Flask(__name__)
-DATABASE = 'shoppingBasket'
-PASSWORD = 'p@ssw0rd123'
-USER = 'root'
-HOSTNAME = 'db'
+DATABASE = env.get("DATABASE")
+PASSWORD = env.get("PASSWORD")
+USER = env.get("USER")
+HOSTNAME = env.get("HOSTNAME")
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://%s:%s@%s/%s' % (USER, PASSWORD, HOSTNAME, DATABASE)
 db = SQLAlchemy(app)
@@ -68,7 +69,6 @@ class Shoppingcartitems(db.Model):
         # initialize columns
         self.shopping_cartId = shopping_cartId
         self.item_id = item_id
-
 
 # connect to server
 engine = create_engine('mysql://%s:%s@%s' % (USER, PASSWORD, HOSTNAME))
