@@ -50,35 +50,6 @@ def change_item_quantity(connection, item_id, quantity):
         return False
 
 
-# def update_cart_price_quantity(connection, item_id, basket_id, quantity):
-#     Item_sql = connection.execute("SELECT * FROM shoppingBasket.Items WHERE item_id = %s", item_id)
-#     cart_sql = connection.execute("SELECT * FROM shoppingBasket.shoppingCart WHERE shoppingCart_id = %s", basket_id)
-
-#     Item = []
-#     cart = []
-#     print cart
-#     for row in Item_sql:
-#         Item = row
-#     for row in cart_sql:
-#         cart = row
-#     if cart is []:
-#         connection.execute("INSERT INTO shoppingBasket.shoppingCart (shoppingCart_id, item_price_total, item_quantity_total) VALUES (%s,0, 0)", basket_id)
-#         cart = (basket_id, 0, 0)
-#     Item_price = Item[2]
-#     Old_cart_total_price = int(cart[1])
-#     Old_cart_quantity = int(cart[2])
-#     newTotalPrice = Old_cart_total_price + Item_price * quantity
-#     newTotalQuantity = Old_cart_quantity + quantity
-#     update_sql = "UPDATE shoppingBasket.shoppingCart SET item_price_total= %s, item_quantity_total= %s  WHERE  shoppingCart_id =%s;"
-#     try:
-#         connection.execute(update_sql, (newTotalPrice, newTotalQuantity, basket_id))
-#         return True
-
-#     except RuntimeError:
-#         raise
-#     except Exception as e:
-#         logging.exception(e)
-
 def update_cart_price_quantity(connection, item_id, basket_id, quantity):
     Item_sql = connection.execute("SELECT * FROM shoppingBasket.Items WHERE item_id = %s", item_id)
     cart_sql = connection.execute("SELECT * FROM shoppingBasket.shoppingCart WHERE shoppingCart_id = %s", basket_id)
