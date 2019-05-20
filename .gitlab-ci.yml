@@ -1,0 +1,21 @@
+image: docker:latest
+
+
+.job_template: &job_definition
+  before_script:
+    - env | grep ^DOCKER_
+    - env | grep ^CI_
+    - docker --version
+    - docker info
+    - apk add --no-cache py-pip
+    - pip install docker-compose
+stages:
+  - build
+
+docker-build-Prod:
+  <<: *job_definition
+  tags:
+     - test
+  stage: build
+  script:
+  - docker-compose up -d
