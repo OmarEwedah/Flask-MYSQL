@@ -1,0 +1,67 @@
+image: docker:latest
+services:
+- name: docker:dind
+  # command: ["--insecure-registry=registry.olemrc.com"]
+
+# variables:
+#   DOCKER_DRIVER: overlay
+#   REGISTRY_LOGIN_TEST_URL: $CI_REGISTRY --username gitlab-ci-token --password $CI_BUILD_TOKEN
+
+.job_template: &job_definition
+  before_script:
+    - env | grep ^DOCKER_
+    - env | grep ^CI_
+    - docker --version
+    - docker info
+    # - docker login $REGISTRY_LOGIN_TEST_URL
+    - apk add --no-cache py-pip
+    - pip install docker-compose
+stages:
+  - build
+
+# maven-test:
+#   tags:
+#     - java
+#   image: maven:3-jdk-8
+#   stage: test
+#   dependencies: []
+#   script:
+#     - echo '<?xml version="1.0" encoding="UTF-8"?><settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"><servers><server>  <username>developer_user</username><password>ole_mrc_developer</password> <id>mrc-central</id>  </server>  </servers><profiles>  <profile>  <repositories>  <repository>  <id>mrc-central</id>  <name>mrc-releases</name>  <url>http://artifactory.olemrc.com/artifactory/mrc-java</url> </repository>  </repositories>  <id>artifactory</id>  </profile>  </profiles>  <activeProfiles>  <activeProfile>artifactory</activeProfile>  </activeProfiles>  </settings>' > $HOME/.m2/settings.xml
+#     - "mvn clean install -DskipTests=true"
+#   artifacts:
+#     expire_in: 1h
+#     paths:
+#       - target
+
+# maven-sonar:
+#   tags:
+#     - java
+#   image: maven:3-jdk-8
+#   stage: sonar
+#   script:
+#     - echo '<?xml version="1.0" encoding="UTF-8"?><settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"><servers><server>  <username>developer_user</username><password>ole_mrc_developer</password> <id>mrc-central</id>  </server>  </servers><profiles>  <profile>  <repositories>  <repository>  <id>mrc-central</id>  <name>mrc-releases</name>  <url>http://artifactory.olemrc.com/artifactory/mrc-java</url> </repository>  </repositories>  <id>artifactory</id>  </profile>  </profiles>  <activeProfiles>  <activeProfile>artifactory</activeProfile>  </activeProfiles>  </settings>' > $HOME/.m2/settings.xml
+#     - "mvn sonar:sonar -Dsonar.host.url=https://sonar.olemrc.com"
+#   artifacts:
+#     expire_in: 1h
+#     paths:
+#       - target
+
+# docker-build-QA:
+#  <<: *job_definition
+#  stage: build
+#  only:
+#   - stagging
+#  script:
+#  - docker build -t registry.olemrc.com/devops/sm-backend-devops:testing-$CI_PIPELINE_ID target/
+#  - docker push registry.olemrc.com/devops/sm-backend-devops:testing-$CI_PIPELINE_ID
+
+
+docker-build-Prod:
+  <<: *job_definition
+  tags:
+     - test
+  stage: build
+  script:
+  - docker-compose up -d
+  # - docker build -t registry.olemrc.com/devops/sm-backend-devops:$CI_PIPELINE_ID target/
+  # - docker push registry.olemrc.com/devops/sm-backend-devops:$CI_PIPELINE_ID

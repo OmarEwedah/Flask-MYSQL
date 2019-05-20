@@ -1,0 +1,25 @@
+version: "2.1"
+services:
+  web:
+    build: .
+    depends_on:
+      db:
+         condition: 
+            service_healthy
+    ports:
+     - "5000:5000"
+    links:
+     - db
+  db:
+    image: mysql
+    ports:
+     - "3306:3306"
+    environment:
+       MYSQL_ROOT_PASSWORD: p@ssw0rd123
+       MYSQL_DATABASE: shoppingBasket
+    healthcheck:
+       test: "/usr/bin/mysql --user=root --password=p@ssw0rd123 --execute \"SHOW DATABASES;\""
+       interval: 2s
+       timeout: 20s
+       retries: 10
+
