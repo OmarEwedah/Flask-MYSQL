@@ -21,8 +21,7 @@ docker-compose up -d --build
 ## Add Item in Database
 
 ```bash
-$ curl -X POST -H "Content-Type: application/json" -d '{"item_name": "hamada","item_price": 200,"item_quantity": 10}' http://localhost:5000/shoppingBasket/AddItem
-
+$ curl -X POST -H "Content-Type: application/json" -d '{"item_name": "Short","item_price": 200,"item_quantity": 10}' http://localhost:5000/shoppingBasket/AddItem
 ```
 
 ## Add cart to database
