@@ -1,6 +1,4 @@
 image: docker:latest
-
-
 .job_template: &job_definition
   before_script:
     - env | grep ^DOCKER_
