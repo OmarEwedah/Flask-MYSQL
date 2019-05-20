@@ -16,4 +16,4 @@ docker-build-Prod:
      - test
   stage: build
   script:
-  - docker-compose up -d
+  - docker-compose up -d --build
